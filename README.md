@@ -1,6 +1,5 @@
 # 1. 프로젝트 개요
 
-
 모임 일정 조율 시스템은 여러 사람이 참여하는 모임의 일정을 효율적으로 조율하고 관리하는 웹 기반 플랫폼입니다. 이 프로젝트는 1인 개발로 진행되며, 모던 웹 기술 스택을 활용하여 구현됩니다.
 
 기술 스택
@@ -31,15 +30,23 @@
 
 프로젝트는 MVP(Minimum Viable Product) 우선으로 진행되며, 핵심 기능을 먼저 구현한 후 단계적으로 고급 기능을 추가하는 방식을 따릅니다. 명확한 요구사항 정의와 데이터베이스 설계를 기반으로 확장 가능한 아키텍처를 구축합니다.
 
+
+
 # 2. 기술 스택
 
+
+
 - backend: nestjs
+
 - frontend: react(vite, rolldwon)
+
 - db: mysql
+
 - 모노 레포 구조
 
-# 3. 프로젝트 구조
 
+
+# 3. 프로젝트 구조
 ├── apps
 │   ├── backend: 백엔드 디렉토리
 │   └── frontend: 프론트엔드 디렉토리
@@ -48,32 +55,61 @@
 ├── pnpm-lock.yaml
 └── pnpm-workspace.yaml
 
+
 # 4. 핵심 명령어
 
+
+
 **개발 서버(backend, frontend) 시작**: pnpm run dev
+
 **개발 frontend서버 시작**: pnpm --filter frontend dev
+
 **개발 backend서버 시작**: pnpm --filter backend start:dev
+
+
 
 # 5. git, github 규칙
 
+
+
 - 커밋 메시지 규칙
-  모노레포에서는 어떤 앱/패키지를 수정했는지 명시.
+
+모노레포에서는 어떤 앱/패키지를 수정했는지 명시.
+
+
 
 ```bash
+
 git commit -m "feat(frontend): Add login page"
+
 git commit -m "fix(backend): Fix TypeORM connection"
+
 git commit -m "chore(shared): Add common types"
+
 git commit -m "docs: Update README"
+
 ```
+
+
 
 - 브랜치 전략
 
+
+
 ```bash
+
 # 기능 개발
+
 git checkout -b feature/frontend-login
+
 git checkout -b feature/backend-auth
 
+  
+
 # 특정 앱만 수정
+
 git checkout -b fix/frontend-ui-bug
+
 git checkout -b fix/backend-database-connection
+
 ```
