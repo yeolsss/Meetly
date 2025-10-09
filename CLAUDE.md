@@ -7,7 +7,7 @@
 ```text
 프로젝트는 다음과 같은 기술로 구성됩니다:
 
-• 프론트엔드: React로 사용자 인터페이스 구현
+• 프론트엔드: Nextjs로 사용자 인터페이스 구현
 • 백엔드: NestJS와 TypeORM을 활용한 서버 및 비즈니스 로직 처리
 • 데이터베이스: MySQL을 사용한 관계형 데이터 관리
 • 패키지 매니저: pnpm을 통한 의존성 관리
@@ -28,7 +28,7 @@
 # 2. 기술 스택
 
 - backend: nestjs
-- frontend: react(vite, rolldwon)
+- frontend: nextjs(v15 / AppRouter)
 - db: mysql
 - 모노 레포 구조
 

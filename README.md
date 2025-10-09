@@ -1,13 +1,13 @@
 # 1. 프로젝트 개요
 
-
 모임 일정 조율 시스템은 여러 사람이 참여하는 모임의 일정을 효율적으로 조율하고 관리하는 웹 기반 플랫폼입니다. 이 프로젝트는 1인 개발로 진행되며, 모던 웹 기술 스택을 활용하여 구현됩니다.
 
 기술 스택
+
 ```text
 프로젝트는 다음과 같은 기술로 구성됩니다:
 
-• 프론트엔드: React로 사용자 인터페이스 구현
+• 프론트엔드: Nextjs로 사용자 인터페이스 구현
 • 백엔드: NestJS와 TypeORM을 활용한 서버 및 비즈니스 로직 처리
 • 데이터베이스: MySQL을 사용한 관계형 데이터 관리
 • 패키지 매니저: pnpm을 통한 의존성 관리
@@ -28,11 +28,12 @@
 # 2. 기술 스택
 
 - backend: nestjs
-- frontend: react(vite, rolldwon)
+- frontend: nextjs(v15 / AppRouter)
 - db: mysql
 - 모노 레포 구조
 
 # 3. 프로젝트 구조
+
 ```
 ├── apps
 │   ├── backend: 백엔드 디렉토리
@@ -44,11 +45,13 @@
 ```
 
 # 4. 핵심 명령어
+
 ```text
 **개발 서버(backend, frontend) 시작**: pnpm run dev
 **개발 frontend서버 시작**: pnpm --filter frontend dev
 **개발 backend서버 시작**: pnpm --filter backend start:dev
 ```
+
 # 5. git, github 규칙
 
 - 커밋 메시지 규칙
