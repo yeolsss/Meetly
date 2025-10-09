@@ -29,7 +29,7 @@
 
 - backend: nestjs
 - frontend: nextjs(v15 / AppRouter)
-- db: mysql
+- db: postgres
 - 모노 레포 구조
 
 # 3. 프로젝트 구조
