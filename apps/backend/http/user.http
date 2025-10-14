@@ -1,0 +1,14 @@
+### GET findAll
+GET {{localhost}}/user
+
+### GET findOne
+GET {{localhost}}/user/1
+
+### POST
+POST {{localhost}}/user
+Content-Type: application/json
+
+{
+  "email":"admin@gmail.com",
+  "password": "qwe123"
+}
