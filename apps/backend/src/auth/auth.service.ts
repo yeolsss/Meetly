@@ -110,9 +110,10 @@ export class AuthService {
   async authenticate(email: string, password: string) {
     const user = await this.userRepository.findOne({ where: { email } });
 
-    if (!user) {
+    if (!user || !user.password) {
       throw new BadRequestException('잘못된 로그인 정보입니다.');
     }
+
     const passOk = await bcrypt.compare(password, user.password);
 
     if (!passOk) {
@@ -139,6 +140,7 @@ export class AuthService {
     await this.userRepository.save({
       email,
       password: hashPassword,
+      providers: ['local'],
     });
 
     return this.userRepository.findOne({ where: { email } });
@@ -149,6 +151,72 @@ export class AuthService {
 
     const user = await this.authenticate(email, password);
 
+    const refreshToken = await this.issueToken(user, true);
+    const accessToken = await this.issueToken(user, false);
+
+    const envMode =
+      this.configService.get<string>(envVariableKeys.env) !== 'dev';
+
+    response.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: envMode ? 'strict' : 'lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      path: '/',
+    });
+
+    return {
+      accessToken,
+      user: {
+        email: user.email,
+      },
+    };
+  }
+
+  async validateGoogleUser(profile: {
+    googleId: string;
+    email: string;
+    displayName: string;
+  }) {
+    // 1. googleId로 기존 사용자 찾기
+    let user = await this.userRepository.findOne({
+      where: { googleId: profile.googleId },
+    });
+
+    if (user) {
+      return user;
+    }
+
+    // 2. 같은 이메일의 기존 사용자 찾기
+    const existingUser = await this.userRepository.findOne({
+      where: { email: profile.email },
+    });
+
+    if (existingUser) {
+      // 기존 계정에 Google 연동
+      existingUser.googleId = profile.googleId;
+
+      // providers 배열에 'google' 추가 (중복 방지)
+      if (!existingUser.providers.includes('google')) {
+        existingUser.providers.push('google');
+      }
+
+      user = await this.userRepository.save(existingUser);
+      return user;
+    }
+
+    // 3. 새로운 Google 계정으로 회원가입
+    user = await this.userRepository.save({
+      email: profile.email,
+      googleId: profile.googleId,
+      providers: ['google'],
+      password: null, // OAuth 사용자는 비밀번호 없음
+    });
+
+    return user;
+  }
+
+  async googleLogin(user: any, response: Response) {
     const refreshToken = await this.issueToken(user, true);
     const accessToken = await this.issueToken(user, false);
 

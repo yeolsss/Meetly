@@ -17,14 +17,21 @@ export class User {
   email: string;
 
   @Column({
+    type: 'enum',
     enum: Role,
     default: Role.user,
   })
   role: Role;
 
-  @Column()
+  @Column({ type: 'varchar', nullable: true })
   @Exclude({
     toPlainOnly: true,
   })
-  password: string;
+  password: string | null;
+
+  @Column({ nullable: true })
+  googleId?: string;
+
+  @Column('simple-array', { default: '' })
+  providers: string[];
 }

@@ -8,6 +8,9 @@ const dbDatabase = 'DB_DATABASE';
 const hashRounds = 'HASH_ROUNDS';
 const accessTokenSecret = 'ACCESS_TOKEN_SECRET';
 const refreshTokenSecret = 'REFRESH_TOKEN_SECRET';
+const googleClientId = 'GOOGLE_CLIENT_ID';
+const googleClientSecret = 'GOOGLE_CLIENT_SECRET';
+const googleCallbackUrl = 'GOOGLE_CALLBACK_URL';
 
 export const envVariableKeys = {
   env,
@@ -20,4 +23,7 @@ export const envVariableKeys = {
   hashRounds,
   accessTokenSecret,
   refreshTokenSecret,
+  googleClientId,
+  googleClientSecret,
+  googleCallbackUrl,
 };

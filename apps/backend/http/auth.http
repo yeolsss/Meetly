@@ -52,3 +52,10 @@ Content-Type: application/json
     // 값 확인용 로그
     client.log("accessToken:", client.global.get("accessToken"));
 %}
+
+
+### GET Google Login
+GET {{localhost}}/auth/google
+
+### GET Google Callback
+GET {{localhost}}/auth/google/callback
