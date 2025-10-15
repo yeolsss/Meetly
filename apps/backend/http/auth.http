@@ -2,4 +2,53 @@
 ### POST register
 POST {{localhost}}/auth/register
 Content-Type: application/json
+Authorization: Basic YWRtaW4xQGdtYWlsLmNvbTpxd2VyMTIzNA==
+
+### POST login
+POST {{localhost}}/auth/login
+Content-Type: application/json
 Authorization: Basic YWRtaW5AZ21haWwuY29tOnF3ZXIxMjM0
+
+> {%
+    // Set-Cookie 헤더에서 refreshToken 추출하여 전역 변수에 저장
+    const setCookie = response.headers['set-cookie'];
+    client.test("Response status is 201", function() {
+        client.assert(response.status === 201, "응답 상태가 201이 아닙니다.");
+    });
+
+    if (setCookie) {
+        // set-cookie가 배열일 수 있으니 문자열로 합침
+        const cookieStr = Array.isArray(setCookie) ? setCookie.join('; ') : setCookie;
+        const match = cookieStr.match(/refreshToken=([^;]+)/);
+        if (match) {
+            client.global.set('refreshToken', match[1]);
+        }
+        // accessToken은 body에서 바로 저장
+        if (response.body && response.body.accessToken) {
+            client.global.set('accessToken', response.body.accessToken);
+        }
+    }
+%}
+
+### POST issue
+POST {{localhost}}/auth/token/issue
+Content-Type: application/json
+
+> {%
+    client.test("응답 상태가 201", function() {
+        client.assert(response.status === 201, "응답 상태가 201이 아닙니다.");
+    });
+
+    // 응답에서 accessToken 저장
+    if (response.status === 201 && response.body && response.body.accessToken) {
+        client.global.set("accessToken", response.body.accessToken);
+    }
+
+    // 저장 여부 확인
+    client.test("accessToken이 저장되었는지", function() {
+        client.assert(!!client.global.get("accessToken"), "accessToken이 저장되지 않았습니다.");
+    });
+
+    // 값 확인용 로그
+    client.log("accessToken:", client.global.get("accessToken"));
+%}
