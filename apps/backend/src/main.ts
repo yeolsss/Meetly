@@ -18,7 +18,14 @@ async function bootstrap() {
     .setDescription('모임 관리 서비스')
     .setVersion('1.0')
     //NOTE: Swagger Auth setting
-    .addBasicAuth()
+    .addBasicAuth(
+      {
+        type: 'http',
+        scheme: 'basic',
+        name: 'BasicAuth',
+      },
+      'BasicAuth',
+    )
     .addBearerAuth()
     .build();
 

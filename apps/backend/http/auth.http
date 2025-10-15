@@ -1,0 +1,5 @@
+
+### POST register
+POST {{localhost}}/auth/register
+Content-Type: application/json
+Authorization: Basic YWRtaW5AZ21haWwuY29tOnF3ZXIxMjM0
