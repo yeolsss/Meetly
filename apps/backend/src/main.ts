@@ -8,6 +8,13 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['verbose'],
   });
+
+  // CORS 설정
+  app.enableCors({
+    origin: ['http://localhost:3000', 'http://localhost:3001'],
+    credentials: true,
+  });
+
   app.enableVersioning({
     type: VersioningType.URI,
   });
@@ -18,7 +25,14 @@ async function bootstrap() {
     .setDescription('모임 관리 서비스')
     .setVersion('1.0')
     //NOTE: Swagger Auth setting
-    .addBasicAuth()
+    .addBasicAuth(
+      {
+        type: 'http',
+        scheme: 'basic',
+        name: 'BasicAuth',
+      },
+      'BasicAuth',
+    )
     .addBearerAuth()
     .build();
 
