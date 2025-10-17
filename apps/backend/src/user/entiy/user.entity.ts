@@ -29,6 +29,9 @@ export class User {
   })
   password: string | null;
 
+  @Column()
+  nickname: string;
+
   @Column({ nullable: true })
   googleId?: string;
 

@@ -19,11 +19,6 @@ interface GoogleProfile {
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   constructor(private readonly configService: ConfigService) {
-    console.log(
-      configService.get<string>(envVariableKeys.googleClientId),
-      configService.get<string>(envVariableKeys.googleClientSecret),
-      configService.get<string>(envVariableKeys.googleCallbackUrl),
-    );
     super({
       clientID: configService.get<string>(envVariableKeys.googleClientId)!,
       clientSecret: configService.get<string>(
