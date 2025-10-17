@@ -2,7 +2,11 @@
 ### POST register
 POST {{localhost}}/auth/register
 Content-Type: application/json
-Authorization: Basic YWRtaW4xQGdtYWlsLmNvbTpxd2VyMTIzNA==
+Authorization: Basic YWRtaW4yQGdtYWlsLmNvbTpxd2VyMTIzNA==
+
+{
+  "nickname": "권경열"
+}
 
 ### POST login
 POST {{localhost}}/auth/login

@@ -25,6 +25,29 @@ export class AuthService {
     private readonly cacheManager: Cache,
   ) {}
 
+  async setAuthToken(user: User, response: Response) {
+    const refreshToken = await this.issueToken(user, true);
+    const accessToken = await this.issueToken(user, false);
+
+    const envMode =
+      this.configService.get<string>(envVariableKeys.env) !== 'dev';
+
+    response.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: envMode ? 'strict' : 'lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      path: '/',
+    });
+
+    return {
+      accessToken,
+      user: {
+        email: user.email,
+      },
+    };
+  }
+
   parseBasicToken(rawToken: string) {
     const basicSplit = rawToken.split(' ');
 
@@ -123,7 +146,7 @@ export class AuthService {
     return user;
   }
 
-  async register(rawToken: string) {
+  async register(rawToken: string, nickname: string) {
     const { email, password } = this.parseBasicToken(rawToken);
 
     const user = await this.userRepository.findOne({ where: { email } });
@@ -141,6 +164,7 @@ export class AuthService {
       email,
       password: hashPassword,
       providers: ['local'],
+      nickname,
     });
 
     return this.userRepository.findOne({ where: { email } });
@@ -151,26 +175,7 @@ export class AuthService {
 
     const user = await this.authenticate(email, password);
 
-    const refreshToken = await this.issueToken(user, true);
-    const accessToken = await this.issueToken(user, false);
-
-    const envMode =
-      this.configService.get<string>(envVariableKeys.env) !== 'dev';
-
-    response.cookie('refreshToken', refreshToken, {
-      httpOnly: true,
-      secure: false,
-      sameSite: envMode ? 'strict' : 'lax',
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      path: '/',
-    });
-
-    return {
-      accessToken,
-      user: {
-        email: user.email,
-      },
-    };
+    return this.setAuthToken(user, response);
   }
 
   async validateGoogleUser(profile: {
@@ -211,31 +216,13 @@ export class AuthService {
       googleId: profile.googleId,
       providers: ['google'],
       password: null, // OAuth 사용자는 비밀번호 없음
+      nickname: profile.displayName,
     });
 
     return user;
   }
 
   async googleLogin(user: any, response: Response) {
-    const refreshToken = await this.issueToken(user, true);
-    const accessToken = await this.issueToken(user, false);
-
-    const envMode =
-      this.configService.get<string>(envVariableKeys.env) !== 'dev';
-
-    response.cookie('refreshToken', refreshToken, {
-      httpOnly: true,
-      secure: false,
-      sameSite: envMode ? 'strict' : 'lax',
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      path: '/',
-    });
-
-    return {
-      accessToken,
-      user: {
-        email: user.email,
-      },
-    };
+    return this.setAuthToken(user, response);
   }
 }

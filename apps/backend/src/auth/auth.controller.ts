@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  Body,
   ClassSerializerInterceptor,
   Controller,
   Get,
@@ -13,6 +14,7 @@ import { AuthService } from './auth.service';
 import {
   ApiBasicAuth,
   ApiBearerAuth,
+  ApiBody,
   ApiOperation,
   ApiResponse,
 } from '@nestjs/swagger';
@@ -35,6 +37,13 @@ export class AuthController {
     description:
       '프론트엔드에서 `Authorization: Basic <base64(username:password)>` 헤더로 요청합니다.',
   })
+  @ApiBody({
+    schema: {
+      example: {
+        nickname: '사용자닉네임',
+      },
+    },
+  })
   @ApiResponse({
     status: 201,
     description: '회원 등록 성공',
@@ -50,8 +59,11 @@ export class AuthController {
       },
     },
   })
-  registerUser(@Authorization() token: string) {
-    return this.authService.register(token);
+  registerUser(
+    @Authorization() token: string,
+    @Body() nickname: { nickname: string },
+  ) {
+    return this.authService.register(token, nickname.nickname);
   }
 
   @Public()
@@ -104,11 +116,9 @@ export class AuthController {
   @ApiOperation({
     summary: 'Google OAuth 로그인',
     description:
-      'Google OAuth 인증 페이지로 리다이렉트됩니다. \n `Swagger에서는 작동하지 않습니다.`',
+      'Google OAuth 인증 페이지로 리다이렉트됩니다.</br> `Swagger에서는 작동하지 않습니다.`',
   })
-  async googleAuth() {
-    // Guard redirects to Google
-  }
+  async googleAuth() {}
 
   @Public()
   @Get('google/callback')
@@ -116,7 +126,7 @@ export class AuthController {
   @ApiOperation({
     summary: 'Google OAuth 콜백',
     description:
-      'Google OAuth 인증 후 리다이렉트되는 엔드포인트입니다. \n `Swagger에서는 작동하지 않습니다.`',
+      'Google OAuth 인증 후 리다이렉트되는 엔드포인트입니다.</br> `Swagger에서는 작동하지 않습니다.`',
   })
   @ApiResponse({
     status: 200,
