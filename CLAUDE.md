@@ -36,12 +36,89 @@
 
 ```
 ├── apps
-│   ├── backend: 백엔드 디렉토리
-│   └── frontend: 프론트엔드 디렉토리
+│   ├── backend
+│   │   ├── http
+│   │   │   ├── auth.http
+│   │   │   ├── http-client.env.json
+│   │   │   └── user.http
+│   │   ├── nest-cli.json
+│   │   ├── package.json
+│   │   ├── README.md
+│   │   ├── src
+│   │   │   ├── app.module.ts
+│   │   │   ├── auth
+│   │   │   │   ├── auth.controller.spec.ts
+│   │   │   │   ├── auth.controller.ts
+│   │   │   │   ├── auth.module.ts
+│   │   │   │   ├── auth.service.spec.ts
+│   │   │   │   ├── auth.service.ts
+│   │   │   │   ├── decorator
+│   │   │   │   │   ├── authorization.decorator.ts
+│   │   │   │   │   ├── public.decorator.ts
+│   │   │   │   │   └── rbac.decorator.ts
+│   │   │   │   ├── guard
+│   │   │   │   │   ├── auth.guard.ts
+│   │   │   │   │   ├── google-auth.guard.ts
+│   │   │   │   │   └── rbac.guard.ts
+│   │   │   │   ├── middleware
+│   │   │   │   │   └── bearer-token.middleware.ts
+│   │   │   │   └── strategy
+│   │   │   │       └── google.strategy.ts
+│   │   │   ├── common
+│   │   │   │   └── constants
+│   │   │   │       └── env.constant.ts
+│   │   │   ├── controller
+│   │   │   │   └── module
+│   │   │   │       ├── module.service.spec.ts
+│   │   │   │       └── module.service.ts
+│   │   │   ├── main.ts
+│   │   │   └── user
+│   │   │       ├── dto
+│   │   │       │   └── create-user.dto.ts
+│   │   │       ├── entiy
+│   │   │       │   └── user.entity.ts
+│   │   │       ├── user.controller.spec.ts
+│   │   │       ├── user.controller.ts
+│   │   │       ├── user.module.ts
+│   │   │       ├── user.service.spec.ts
+│   │   │       └── user.service.ts
+│   │   ├── test
+│   │   │   ├── app.e2e-spec.ts
+│   │   │   └── jest-e2e.json
+│   │   ├── tsconfig.build.json
+│   │   └── tsconfig.json
+│   └── frontend
+│       ├── eslint.config.js
+│       ├── index.html
+│       ├── next-env.d.ts
+│       ├── next.config.ts
+│       ├── package.json
+│       ├── public
+│       │   └── vite.svg
+│       ├── README.md
+│       ├── src
+│       │   ├── app
+│       │   │   ├── globals.css
+│       │   │   ├── layout.tsx
+│       │   │   └── page.tsx
+│       │   ├── App.css
+│       │   ├── App.tsx
+│       │   ├── assets
+│       │   │   └── react.svg
+│       │   ├── index.css
+│       │   └── main.tsx
+│       ├── tsconfig.app.json
+│       ├── tsconfig.json
+│       ├── tsconfig.node.json
+│       └── vite.config.ts
+├── CLAUDE.md
+├── package.json
 ├── packages
-│   └── shared: 모노 레포 공유 패키지
+│   └── shared
+│       └── package.json
 ├── pnpm-lock.yaml
-└── pnpm-workspace.yaml
+├── pnpm-workspace.yaml
+└── README.md
 ```
 
 # 4. 핵심 명령어
