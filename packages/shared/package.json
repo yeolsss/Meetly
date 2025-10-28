@@ -9,8 +9,5 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.17.1",
-  "dependencies": {
-    "lodash": "^4.17.21"
-  }
+  "packageManager": "pnpm@10.17.1"
 }
