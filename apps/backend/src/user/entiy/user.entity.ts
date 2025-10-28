@@ -1,5 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { Exclude } from 'class-transformer';
+import { BaseEntity } from '../../common/entity/base.entity';
 
 export enum Role {
   admin = 0,
@@ -7,7 +8,7 @@ export enum Role {
 }
 
 @Entity()
-export class User {
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
